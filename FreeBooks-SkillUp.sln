@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBooks-SkillUp", "FreeBooks-SkillUp\WebBooks-SkillUp.csproj", "{D8AAF3EE-D5B0-418E-A0CC-7ADD3AAD677D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBooks-SkillUp", "FreeBooks-SkillUp\WebBooks-SkillUp.csproj", "{D8AAF3EE-D5B0-418E-A0CC-7ADD3AAD677D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domin", "Domin\Domin.csproj", "{407D1447-B7D8-4496-95D5-AFAAC80A4276}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domin", "Domin\Domin.csproj", "{407D1447-B7D8-4496-95D5-AFAAC80A4276}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{05BA55E6-DDDD-4EFF-B2E0-391ECB7F5DB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructuree", "Infrastructure\Infrastructuree.csproj", "{05BA55E6-DDDD-4EFF-B2E0-391ECB7F5DB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

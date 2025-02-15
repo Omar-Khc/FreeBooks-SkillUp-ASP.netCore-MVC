@@ -1,3 +1,8 @@
+using Infrastructure.Data;
+using Infrastructuree.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace FreeBooks_SkillUp
 {
     public class Program
@@ -8,6 +13,11 @@ namespace FreeBooks_SkillUp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<BookDbContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("BookConnection")));
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<BookDbContext>();
 
             var app = builder.Build();
 
