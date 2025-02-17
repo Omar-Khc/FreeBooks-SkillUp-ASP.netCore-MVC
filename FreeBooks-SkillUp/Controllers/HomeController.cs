@@ -1,8 +1,8 @@
-using FreeBooks_SkillUp.Models;
+using WebBooks_SkillUp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace FreeBooks_SkillUp.Controllers
+namespace WebBooks_SkillUp.Controllers
 {
     public class HomeController : Controller
     {

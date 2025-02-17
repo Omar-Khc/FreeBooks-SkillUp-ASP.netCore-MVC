@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Infrastructuree.ViewModels;
 
-namespace Infrastructure.Data
+namespace Infrastructuree.Data
 {
     public class BookDbContext : IdentityDbContext<ApplicationUser>
     {

@@ -1,9 +1,9 @@
-using Infrastructure.Data;
+using Infrastructuree.Data;
 using Infrastructuree.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace FreeBooks_SkillUp
+namespace WebBooks_SkillUp
 {
     public class Program
     {
@@ -19,7 +19,11 @@ namespace FreeBooks_SkillUp
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<BookDbContext>();
 
+            builder.Services.AddSession();
+
+
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -33,6 +37,8 @@ namespace FreeBooks_SkillUp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

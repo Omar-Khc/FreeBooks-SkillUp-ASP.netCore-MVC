@@ -1,0 +1,146 @@
+﻿@model RolesViewModel
+
+
+<div class="wrapper">
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col md-6">
+                <h1 class="m-0 text-dark">
+                    مجموعة  المستخدمين
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Admin/Home/Index">الصفحة الرئيسية</a></li>
+                    <li class="breadcrumb-item active">ادارة الكتب</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left:20px;">
+                        اضف مجموعة جديدة
+                    </button>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="tableRole" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>اسم المجموعة</th>
+                                <th>الاحداث</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Roles)
+                            {
+                                <tr>
+                                    <td>
+                                        @switch (item.Name)
+                                        {
+                                            case "SupperAdmin":
+                                                <span class="badge badge-danger" style="width:250px; height:25px;">@item.Name</span>
+                                                break;
+
+                                            case "Admin":
+                                                <span class="badge badge-success" style="width:250px; height:25px;">@item.Name</span>
+                                                break;
+
+                                            default:
+                                                <span class="badge badge-warning" style="width:250px; height:25px;">@item.Name</span>
+                                                break;
+                                        }
+                                    </td>
+                                    <td>
+                                        <input type="button" class="btn btn-primary" value="تعديل" onclick="EditRole('@item.Id','@item.Name')" data-bs-toggle="modal" data-bs-target="#exampleModal" />
+                                        <input type="button" class="btn btn-danger" value="حذف" onclick="DeleteRole('@item.Id')" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+    </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="title">اضافة مجموعة جديدة</h1>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Role" asp-controller="Accounts" method="post">
+                    <div class="form-group">
+                        <input type="text" hidden class="form-control" asp-for="NewRole.RoleId" id="roleId" />
+                        <label asp-for="NewRole.RoleName" class="form-label">اسم المجموعة</label>
+                        <input type="text" class="form-control" asp-for="NewRole.RoleName" id="roleName" />
+                        <span asp-validation-for="NewRole.RoleName" class="text-danger"></span>
+                    </div>
+
+                    <div class="modal-footer justify-content-center" style="padding:15px 15px 15px 0;">
+                        <input type="submit" class="btn btn-primary" value="حفظ" id="btnSave" />
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">اغلاق</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Script {
+    @if (!string.IsNullOrEmpty(Context.Session.GetString("msgType")))
+    {
+        if (Context.Session.GetString("msgType") == "Success")
+        {
+            <script>
+                Swal.fire({
+                    title: "@Context.Session.GetString("title")",
+                    icon: "success",
+                    draggable: true,
+                    confirmButtonText: 'حسناً',
+                    timer: 1500
+                });
+            </script>
+        }
+        else
+        {
+            <script>
+                Swal.fire({
+                    icon: "error",
+                    title: "@Context.Session.GetString("title")",
+                    text: "@Context.Session.GetString("msg")",
+                });
+            </script>
+
+        }
+        Context.Session.SetString("msgType", "");
+    }
+
+    <script src="~/js/Roles.js" > </script>
+}
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

@@ -1,4 +1,4 @@
-namespace FreeBooks_SkillUp.Models
+namespace WebBooks_SkillUp.Models
 {
     public class ErrorViewModel
     {
