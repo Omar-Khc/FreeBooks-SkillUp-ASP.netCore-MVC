@@ -15,7 +15,7 @@ namespace Infrastructuree.Data
     {
         public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace Infrastructuree.Data
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<IdentityUser>().ToTable("Users","Identity");
+            modelBuilder.Entity<IdentityUser>().ToTable("Users", "Identity");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles", "Identity");
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", "Identity");
             modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaim", "Identity");
@@ -39,6 +39,13 @@ namespace Infrastructuree.Data
             modelBuilder.Entity<LogSubCategory>().Property(x => x.Id).HasDefaultValueSql("(newid())");
             modelBuilder.Entity<Book>().Property(x => x.Id).HasDefaultValueSql("(newid())");
             modelBuilder.Entity<LogBook>().Property(x => x.Id).HasDefaultValueSql("(newid())");
+
+            modelBuilder.Entity<VwUser>(
+                entity =>
+                {
+                    entity.HasNoKey();
+                    entity.ToView("VwUser");
+                });
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -47,5 +54,6 @@ namespace Infrastructuree.Data
         public DbSet<LogSubCategory> LogSubCategories { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<LogBook> LogBooks { get; set; }
+        public DbSet<VwUser> UsersView { get; set; }
     }
 }
