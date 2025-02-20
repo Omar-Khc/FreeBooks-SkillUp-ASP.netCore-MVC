@@ -17,13 +17,12 @@ namespace Infrastructuree.ViewModels
         
         public List<IdentityRole>? Roles { get; set; }
 
-        public NewRegister? NewRegister { get; set; }
+        public NewRegister NewRegister { get; set; }
 
     }
 
     public class NewRegister
     {
-        [Required(ErrorMessage ="هذا الحقل مطلوب")]
         public string? Id { get; set; }
 
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
@@ -43,7 +42,6 @@ namespace Infrastructuree.ViewModels
         public bool ActiveUser { get; set; }
 
         [Required(ErrorMessage = "هذا الحقل مطلوب")]
-        [MinLength(8, ErrorMessage = "يجب الا يقل عدد حروف الكلمة عن 8 ارقام")]
         [PasswordPropertyText]
         public string Password { get; set; }
 

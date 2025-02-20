@@ -118,7 +118,6 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -154,7 +153,7 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
                         //Succsseded
                         var Role = await _userManager.AddToRoleAsync(user, model.NewRegister.RoleName);
                         if (Role.Succeeded)
-                            SessionMsg(Helper.Success, "تم الحفظ", "لم يتم حفظ مجموعة المستخدم");
+                            SessionMsg(Helper.Success, "تم الحفظ", "تم حفظ مجموعة المستخدم");
                         else
                             SessionMsg(Helper.Error, "لم يتم الحفظ", "لم يتم حفظ المستخدم");
                     }
@@ -165,13 +164,13 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
                 {
                     //Update
                     var userUpdate = await _userManager.FindByIdAsync(user.Id);
-                    userUpdate.Id = model.NewRegister.Id;   
+                    userUpdate.Id = model.NewRegister.Id;
                     userUpdate.Name = model.NewRegister.Name;
                     userUpdate.UserName = model.NewRegister.Email;
                     userUpdate.Email = model.NewRegister.Email;
                     userUpdate.ActiveUser = model.NewRegister.ActiveUser;
                     userUpdate.ImageUser = model.NewRegister.ImageUser;
-                
+
                     var result = await _userManager.UpdateAsync(userUpdate);
                     if (result.Succeeded)
                     {
@@ -179,33 +178,38 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
                         await _userManager.RemoveFromRolesAsync(userUpdate, oldRole);
                         var AddRole = await _userManager.AddToRoleAsync(userUpdate, model.NewRegister.RoleName);
                         if (AddRole.Succeeded)
-                            SessionMsg(Helper.Success, "تم التعديل", "لم يتم تعديل مجموعة المستخدم");
+                            SessionMsg(Helper.Success, "تم التعديل", "تم تعديل مجموعة المستخدم");
                         else
                             SessionMsg(Helper.Error, "لم يتم التعديل", "لم يتم تعديل مجموعة المستخدم");
                     }
                     else // Not Successeded
                         SessionMsg(Helper.Error, "لم يتم التعديل", "لم يتم تعديل المستخدم");
                 }
-                return RedirectToAction("Registers", "Accounts");
+                return RedirectToAction("Register", "Accounts");
             }
-            return RedirectToAction("Registers", "Accounts");
+            return RedirectToAction("Register", "Accounts");
         }
 
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteUser(string userId)
+        public async Task<IActionResult> DeleteUser(string Id)
         {
-            var User = _userManager.Users.FirstOrDefault(x => x.Id == userId);
-
-            if (User.ImageUser != null && User.ImageUser != Guid.Empty.ToString())
+            var User = _userManager.Users.FirstOrDefault(x => x.Id == Id);
+            if (User != null)
             {
-                var PathImage = Path.Combine(@"wwwroot/", Helper.PathImageuser, User.ImageUser);
-                if (System.IO.File.Exists(PathImage))
-                    System.IO.File.Delete(PathImage);
+                if (User.ImageUser != null && User.ImageUser != Guid.Empty.ToString())
+                {
+                    var PathImage = Path.Combine(@"wwwroot/", Helper.PathImageuser, User.ImageUser);
+                    if (System.IO.File.Exists(PathImage))
+                        System.IO.File.Delete(PathImage);
+                }
+                if ((await _userManager.DeleteAsync(User)).Succeeded)
+                    return RedirectToAction("Register", "Accounts");
             }
-            if ((await _userManager.DeleteAsync(User)).Succeeded)
-                return RedirectToAction("Registers", "Accounts");
+            else
+            {
+                return NotFound();
+            }
 
-            return RedirectToAction("Registers", "Accounts");
+            return RedirectToAction("Register", "Accounts");
         }
 
         private void SessionMsg(string msgtype, string title, string msg)

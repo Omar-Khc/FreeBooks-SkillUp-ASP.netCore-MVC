@@ -211,13 +211,13 @@
                                        
                                        <td>@user.Email</td>
                                        <td><input type="checkbox" disabled checked="@user.ActiveUser" style="width:35px; height:35px" ></td>
-                                       <td>
-                                           <input type="button" class="btn btn-info btn-sm" onclick="Edit('@user.Id', '@user.Name',
+                                        <td>
+                                            <input type="button" class="btn btn-info btn-sm" onclick="Edit('@user.Id', '@user.Name',
                                             '@user.Email','@user.ImageUser','@user.Role','@user.ActiveUser')" value="تعديل" data-bs-toggle="modal" data-bs-target="#exampleModal" />|
-                                           <input type="button" class="btn btn-danger btn-sm" onclick="Delete('@user.Id')" value="حذف" />
-                                           <input type="button" class="btn btn-success btn-sm" onclick="ChangePassword('@user.Id')" 
-                                                    value="تغيير كلمة المرور"  data-bs-toggle="modal" data-bs-target="#changePasswordModal"/>
-                                       </td>
+                                            <input type="button" class="btn btn-danger btn-sm" onclick="DeleteUser('@user.Id')" value="حذف" />
+                                            <input type="button" class="btn btn-success btn-sm" onclick="ChangePassword('@user.Id')"
+                                                   value="تغيير كلمة المرور" data-bs-toggle="modal" data-bs-target="#changePasswordModal" />
+                                        </td>
                                        </tr>
                                    }
                                 </tbody>
@@ -238,15 +238,15 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog card card-success card-outline">
-            <div class="modal-content">
-                <div class="modal-header">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog card card-success card-outline">
+        <div class="modal-content">
+            <div class="modal-header">
                     <h5 class="modal-title" id="title">تسجيل مستخدم جديد</h5>
                     <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</a>
                 </div>
                 <div class="modal-body">
-                    <form asp-action="Registers" asp-controller="Accounts" method="post" enctype="multipart/form-data">
+                <form asp-area="Admin" asp-action="Register" asp-controller="Accounts" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <input type="text" hidden class="form-control" asp-for="NewRegister.Id" id="userId" />
                             <input type="text" hidden class="form-control" asp-for="NewRegister.ImageUser" id="imgeHide" />
@@ -282,7 +282,7 @@
                         </div>
                         <div class="form-group" id="grPassword">
                             <label asp-for="NewRegister.Password" class="control-lable">كلمة المرور</label>
-                            <input type="password" class="form-control" asp-for="NewRegister.Password" id="userPassword" />
+                        <input type="password" class="form-control" asp-for="NewRegister.Password" id="userPasswords" />
                             <span asp-validation-for="NewRegister.Password" class="text-danger"></span>
                         </div>
                         <div class="form-group" id="grcomPassword">

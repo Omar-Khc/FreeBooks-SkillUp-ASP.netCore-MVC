@@ -12,8 +12,8 @@ namespace Domin.Entity
         public const string PathSaveImageuser = "Images/Users";
 
 
-        public const string Success = "success";
-        public const string Error = "error";
+        public const string Success = "Success";
+        public const string Error = "Error";
 
         public const string MsgType = "msgType";
         public const string Title = "title";

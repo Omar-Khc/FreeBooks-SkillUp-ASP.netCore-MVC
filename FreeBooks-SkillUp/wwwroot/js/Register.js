@@ -4,7 +4,29 @@
 
 
 
-function DeleteUser(id) {
+//function Delete(id) {
+//    Swal.fire({
+//        title: lbTitleMsgDelete,
+//        text: lbTextMsgDelete,
+//        icon: 'warning',
+//        showCancelButton: true,
+//        confirmButtonColor: '#3085d6',
+//        cancelButtonColor: '#d33',
+//        confirmButtonText: lbconfirmButtonText,
+//        cancelButtonText: lbcancelButtonText
+//    }).then((result) => {
+//        if (result.isConfirmed) {
+//            window.location.href = `/Admin/Accounts/DeleteUser?userId=${id}`;
+//            Swal.fire(
+//                lbTitleDeletedOk,
+//                lbMsgDeletedOkRegister,
+//                lbSuccess
+//            )
+//        }
+//    })
+//}
+
+function DeleteUser(Id) {
     Swal.fire({
         title: "هل انت متأكد يا بني ؟",
         icon: "warning",
@@ -14,7 +36,7 @@ function DeleteUser(id) {
         confirmButtonText: "نعم , قم بالحذف"
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `/Admin/Accounts/DeleteUser?Id=${id}`
+            window.location.href = `/Admin/Accounts/DeleteUser?Id=${Id}`
             Swal.fire({
                 title: "تم الحذف !",
                 icon: "success",
@@ -25,33 +47,46 @@ function DeleteUser(id) {
 }
 
 
-EditUser = (id, name, email, imageUser, role, activeUser) => {
-    document.getElementById("title").innerHTML = "تعديل مجموعة المستخدمين";
+Edit = (id, name, email, image, role, active) => {
+    document.getElementById("title").innerHTML = "تعديل المستخدم";
     document.getElementById("btnSave").value = "تعديل";
     document.getElementById("userId").value = id;
     document.getElementById("userName").value = name;
     document.getElementById("userEmail").value = email;
-    document.getElementById("userImage").value = "";
-    document.getElementById("addUserRole").value = role;
+    document.getElementById("ddluserRole").value = role;
+    var Active = document.getElementById("userActive");
+    if (active == "True")
+        Active.checked = true;
+    else
+        Active.checked = false;
 
-    document.getElementById("passwordFields").style.display = "none";
-    document.getElementById("confirmPasswordFields").style.display = "none";
+    $('#grPassword').hide();
+    $('#grcomPassword').hide();
 
-    var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
-    modal.show();
+    document.getElementById("userPasswords").value = "$$$$$$";
+    document.getElementById("userCompare").value = "$$$$$$";
+    document.getElementById("image").hidden = false;
+    document.getElementById("image").src = "/Images/Users/" + image;
+    document.getElementById("imgeHide").value = image;
+
+    
 }
 
-RestRole = () => {
-    document.getElementById("title").innerHTML = "اضافة مجموعة جديدة";
+Rest = () => {
+    document.getElementById("title").innerHTML = "اضافة مستخدم جديد";
     document.getElementById("btnSave").value = "حفظ";
     document.getElementById("userId").value = "";
     document.getElementById("userName").value = "";
     document.getElementById("userEmail").value = "";
-    document.getElementById("userImage").value = "";
-    document.getElementById("addUserRole").value = "";
-    document.getElementById("activeUser").checked = false;
-    document.getElementById("imagePreview").style.display = "none";
+    //document.getElementById("userImage").value = "";
+    document.getElementById("ddluserRole").value = "";
+    document.getElementById("userActive").checked = false;
+    $('#grPassword').show();
+    $('#grcomPassword').show();
+    document.getElementById("userPasswords").value = "";
+    document.getElementById("userCompare").value = "";
+    document.getElementById("image").hidden = true;
+    document.getElementById("imgeHide").value = "";
 
-    document.getElementById("passwordFields").style.display = "block";
-    document.getElementById("confirmPasswordFields").style.display = "block";
+
 }
