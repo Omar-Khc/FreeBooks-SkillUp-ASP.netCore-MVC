@@ -157,7 +157,7 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
                         else
                             SessionMsg(Helper.Error, "لم يتم الحفظ", "لم يتم حفظ المستخدم");
                     }
-                    else //Not Successeded
+                    else //Not Successeded{
                         SessionMsg(Helper.Error, "لم يتم الحفظ", "لم يتم تعديل المستخدم");
                 }
                 else
@@ -210,6 +210,22 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Register", "Accounts");
+        }
+
+        public async Task<IActionResult> ChangePassword(RegisterViewModel model)
+        {
+
+            var User = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == model.ChangePassword.Id);
+            if (User != null)
+            {
+                await _userManager.RemovePasswordAsync(User);
+                var userUpdates = await _userManager.AddPasswordAsync(User, model.ChangePassword.NewPassword);
+                if (userUpdates.Succeeded)
+                    SessionMsg(Helper.Success, "تم تعديل كلمة المرور", "تم تعديل كلمة المرور بنجاح");
+                else
+                    SessionMsg(Helper.Error, "لم يتم تعديل كلمة المرور", "لم يتم تعديل كلمة المرور");
+            }
+            return RedirectToAction(nameof(Register));
         }
 
         private void SessionMsg(string msgtype, string title, string msg)

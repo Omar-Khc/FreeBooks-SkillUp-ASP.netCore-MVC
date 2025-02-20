@@ -1,144 +1,5 @@
 ﻿@model RegisterViewModel
-@* 
 
-<div class="wrapper">
-
-
-
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="tableRole" class="table table-bordered table-hover">
-                            <thead>
-
-                            </thead>
-                            <tbody>
-                                @foreach (var user in Model.VwUsers)
-                                {
-                                    <tr>
-                                        <td>@user.Name</td>
-                                        <td>
-                                            @switch (user.Role)
-                                            {
-                                                case "SupperAdmin":
-                                                    <span class="badge badge-danger" style="width:80px; height:25px;">@user.Role</span>
-                                                    break;
-
-                                                case "Admin":
-                                                    <span class="badge badge-success" style="width:80px; height:25px;">@user.Role</span>
-                                                    break;
-
-                                                default:
-                                                    <span class="badge badge-warning" style="width:80px; height:25px;">@user.Role</span>
-                                                    break;
-                                            }
-                                        </td>
-                                        <td>
-                                            <img src="@Helper.PathImageuser/@user.ImageUser" class="img-bordered img-circle img-circle"
-                                                 style="width:50px; height:50px">
-                                        </td>
-
-                                        <td>@user.Email</td>
-                                        <td><input type="checkbox" disabled checked="@user.ActiveUser" style="width:35px; height:35px"></td>
-                                        <td>
-                                            <input type="button" class="btn btn-info btn-sm" onclick="EditUser('@user.Id', '@user.Name',
-                                            '@user.Email','@user.ImageUser','@user.Role','@user.ActiveUser')" value="تعديل" data-bs-toggle="modal" data-bs-target="#exampleModal" />|
-                                            <input type="button" class="btn btn-danger btn-sm" onclick="DeleteUser('@user.Id')" value="حذف" />
-                                            <input type="button" class="btn btn-success btn-sm" onclick="ChangePassword('@user.Id')"
-                                                   value="تغيير كلمة السر" data-bs-toggle="modal" data-bs-target="#changePasswordModal" />
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </section>
-
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="title">تسجيل مستخدم جديد</h1>
-            </div>
-            <div class="modal-body">
-                <form asp-action="Register" asp-controller="Accounts" method="post">
-                    <div class="form-group">
-                        <input type="text" hidden class="form-control" asp-for="NewRegister.Id" id="userId" />
-                        <label asp-for="NewRegister.Name" class="form-label">اسم المستخدم</label>
-                        <input type="text" class="form-control" asp-for="NewRegister.Name" id="userName" />
-                        <span asp-validation-for="NewRegister.Name" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="NewRegister.Email" class="form-label">البريد الالكتروني</label>
-                        <input type="email" class="form-control" asp-for="NewRegister.Email" id="userEmail" />
-                        <span asp-validation-for="NewRegister.Email" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="NewRegister.ImageUser" class="form-label">صورة المستخدم</label>
-                        <input type="file" class="form-control" asp-for="NewRegister.ImageUser" id="userImage" />
-                        <span asp-validation-for="NewRegister.ImageUser" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="NewRegister.RoleName" class="form-label">اسم المجموعة</label>
-                        <select class="form-control" asp-for="NewRegister.RoleName" id="addUserRole"
-                                asp-items="@(new SelectList(Model.Roles, "Name","Name" ))">
-                            <option value="">اختر مجموعة المستخدم</option>
-                        </select>
-                        <span asp-validation-for="NewRegister.RoleName" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="NewRegister.ActiveUser" class="form-label">تفعيل المستخدم</label>
-                        <input type="checkbox" class="form-control" asp-for="NewRegister.ActiveUser" id="activeUser" />
-                    </div>
-
-                    <div class="form-group" id="passwordFields">
-                        <label asp-for="NewRegister.Password" class="form-label">كلمة المرور</label>
-                        <input type="password" class="form-control" asp-for="NewRegister.Password" id="userPassword" />
-                        <span asp-validation-for="NewRegister.Password" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group" id="confirmPasswordFields">
-                        <label asp-for="NewRegister.ConfirmPassword" class="form-label">تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control" asp-for="NewRegister.ConfirmPassword" id="userConfirmPassword" />
-                        <span asp-validation-for="NewRegister.ConfirmPassword" class="text-danger"></span>
-                    </div>
-
-                    <div class="modal-footer justify-content-center" style="padding:15px 15px 15px 0;">
-                        <input type="submit" class="btn btn-primary" value="تسجيل" id="btnSave" />
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">اغلاق</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
- *@
-
-
-
- 
 @{
     ViewData["Title"] = "Registers";
 }
@@ -167,6 +28,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
                     <div class="card-header">
 
                         <!-- Button trigger modal -->
@@ -247,6 +119,8 @@
                 </div>
                 <div class="modal-body">
                 <form asp-area="Admin" asp-action="Register" asp-controller="Accounts" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="All"></div>
+
                         <div class="form-group">
                             <input type="text" hidden class="form-control" asp-for="NewRegister.Id" id="userId" />
                             <input type="text" hidden class="form-control" asp-for="NewRegister.ImageUser" id="imgeHide" />
@@ -256,7 +130,7 @@
                         </div>
                          <div class="form-group">
                             <label asp-for="NewRegister.Email" class="control-lable">البريد الالكتروني</label>
-                            <input type="text" class="form-control" asp-for="NewRegister.Email" id="userEmail" />
+                        <input data-sb-validations="required" type="text" class="form-control" asp-for="NewRegister.Email" id="userEmail" />
                             <span asp-validation-for="NewRegister.Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -282,12 +156,12 @@
                         </div>
                         <div class="form-group" id="grPassword">
                             <label asp-for="NewRegister.Password" class="control-lable">كلمة المرور</label>
-                        <input type="password" class="form-control" asp-for="NewRegister.Password" id="userPasswords" />
+                        <input data-sb-validations="required" type="password" class="form-control" asp-for="NewRegister.Password" id="userPasswords" />
                             <span asp-validation-for="NewRegister.Password" class="text-danger"></span>
                         </div>
                         <div class="form-group" id="grcomPassword">
                             <label asp-for="NewRegister.ConfirmPassword" class="control-lable">تأكيد كلمة المرور</label>
-                        <input type="password" class="form-control" asp-for="NewRegister.ConfirmPassword" id="userCompare" />
+                        <input data-sb-validations="required" type="password" class="form-control" asp-for="NewRegister.ConfirmPassword" id="userCompare" />
                         <span asp-validation-for="NewRegister.ConfirmPassword" class="text-danger"></span>
                         </div>
                         <div class="modal-footer-rtl" style="padding:0 15px 15px 0">
@@ -303,12 +177,12 @@
 
 
 
-@*      <!-- Modal Change Password -->
+     <!-- Modal Change Password -->
     <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
         <div class="modal-dialog card card-success card-outline">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="title">@ResourceWeb.lbbtnChangePassword</h5>
+                    <h5 class="modal-title" id="title">تغيير كلمة المرور</h5>
                     <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</a>
                 </div>
                 <div class="modal-body">
@@ -316,17 +190,17 @@
                         <div class="form-group">
                             <input type="text" hidden class="form-control" asp-for="ChangePassword.Id" id="userPassId" />
                            
-                            <label asp-for="ChangePassword.NewPassword" class="control-lable">@ResourceWeb.lbPassword</label>
+                            <label asp-for="ChangePassword.NewPassword" class="control-lable">كلمة المرور الجديدة</label>
                             <input type="password" class="form-control" asp-for="ChangePassword.NewPassword" />
                             <span asp-validation-for="ChangePassword.NewPassword" class="text-danger"></span>
                         </div>
                          <div class="form-group">
-                            <label asp-for="ChangePassword.ComparePassword" class="control-lable">@ResourceWeb.lbComparePassword</label>
-                            <input type="password" class="form-control" asp-for="ChangePassword.ComparePassword" />
-                            <span asp-validation-for="ChangePassword.ComparePassword" class="text-danger"></span>
+                            <label asp-for="ChangePassword.ConfirmNewPassword" class="control-lable">اعد كتابة كلمة المرور</label>
+                        <input type="password" class="form-control" asp-for="ChangePassword.ConfirmNewPassword" />
+                        <span asp-validation-for="ChangePassword.ConfirmNewPassword" class="text-danger"></span>
                         </div>
                         <div class="modal-footer-rtl" style="padding:0 15px 15px 0">
-                            <input type="submit" class="btn btn-success" value="@ResourceWeb.lbbtnSave" id="btnSave" />
+                            <input type="submit" class="btn btn-success" value="حفظ" id="btnSave" />
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -334,7 +208,9 @@
 
             </div>
         </div>
-    </div> *@
+    </div>
+
+
 @section Script {
     @if (!string.IsNullOrEmpty(Context.Session.GetString("msgType")))
     {

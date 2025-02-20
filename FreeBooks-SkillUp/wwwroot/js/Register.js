@@ -63,8 +63,8 @@ Edit = (id, name, email, image, role, active) => {
     $('#grPassword').hide();
     $('#grcomPassword').hide();
 
-    document.getElementById("userPasswords").value = "$$$$$$";
-    document.getElementById("userCompare").value = "$$$$$$";
+    document.getElementById("userPasswords").value = "123qwe123qwe";
+    document.getElementById("userCompare").value = "123qwe123qwe";
     document.getElementById("image").hidden = false;
     document.getElementById("image").src = "/Images/Users/" + image;
     document.getElementById("imgeHide").value = image;
@@ -89,4 +89,9 @@ Rest = () => {
     document.getElementById("imgeHide").value = "";
 
 
+}
+
+
+ChangePassword = (Id) => {
+    document.getElementById("userPassId").value = Id;
 }

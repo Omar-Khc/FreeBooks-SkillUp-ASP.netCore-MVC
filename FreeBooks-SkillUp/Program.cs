@@ -1,6 +1,7 @@
 using Infrastructuree.Data;
 using Infrastructuree.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebBooks_SkillUp
@@ -20,6 +21,17 @@ namespace WebBooks_SkillUp
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<BookDbContext>();
 
             builder.Services.AddSession();
+
+            builder.Services.Configure<IdentityOptions>(
+                option =>
+                {
+                    option.Password.RequiredUniqueChars = 0;
+                    option.Password.RequireUppercase = false;
+                    option.Password.RequireLowercase = false;
+                    option.Password.RequiredLength = 8;
+                    option.Password.RequireDigit = false;
+                    option.Password.RequireNonAlphanumeric = false;
+                });
 
 
             var app = builder.Build();
