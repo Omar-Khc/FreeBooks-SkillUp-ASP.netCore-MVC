@@ -24,21 +24,10 @@
     </div>
         <!--End Content-Header-->
         <!-- Main content -->
-        <section class="content">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                    @if (!ViewData.ModelState.IsValid)
-                    {
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                                {
-                                    <li>@error.ErrorMessage</li>
-                                }
-                            </ul>
-                        </div>
-                    }
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
                     <div class="card-header">
 
                         <!-- Button trigger modal -->
@@ -46,17 +35,17 @@
                             اضافة مستخدم جديد
                         </button>
                     </div>
-                        <!-- /.card-header -->
-                        <div class="card-bodyW">
-                            <table id="tableRole" class="table table-bordered table-hover">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tableRole" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th>اسم المستخدم</th>
-                                    <th>دور المستخدم</th>
-                                    <th>صورة المستخدم</th>
-                                    <th>البريد الالكتروني</th>
-                                    <th>تفعيل المستخدم</th>
-                                    <th>الأحداث</th>
+                                    <th style="width:15%;" >اسم المستخدم</th>
+                                    <th style="width:15%;" >دور المستخدم</th>
+                                    <th style="width:10%;" >صورة المستخدم</th>
+                                    <th style="width:20%;" >البريد الالكتروني</th>
+                                    <th style="width:10%;" >تفعيل المستخدم</th>
+                                    <th style="width:35%;" >الأحداث</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -85,8 +74,8 @@
                                        <td><input type="checkbox" disabled checked="@user.ActiveUser" style="width:35px; height:35px" ></td>
                                         <td>
                                             <input type="button" class="btn btn-info btn-sm" onclick="Edit('@user.Id', '@user.Name',
-                                            '@user.Email','@user.ImageUser','@user.Role','@user.ActiveUser')" value="تعديل" data-bs-toggle="modal" data-bs-target="#exampleModal" />|
-                                            <input type="button" class="btn btn-danger btn-sm" onclick="DeleteUser('@user.Id')" value="حذف" />
+                                            '@user.Email','@user.ImageUser','@user.Role','@user.ActiveUser')" value="تعديل" data-bs-toggle="modal" data-bs-target="#exampleModal" />  
+                                            <input type="button" class="btn btn-danger btn-sm" onclick="DeleteUser('@user.Id')" value="حذف" />  
                                             <input type="button" class="btn btn-success btn-sm" onclick="ChangePassword('@user.Id')"
                                                    value="تغيير كلمة المرور" data-bs-toggle="modal" data-bs-target="#changePasswordModal" />
                                         </td>
@@ -119,7 +108,6 @@
                 </div>
                 <div class="modal-body">
                 <form asp-area="Admin" asp-action="Register" asp-controller="Accounts" method="post" enctype="multipart/form-data">
-                    <div asp-validation-summary="All"></div>
 
                         <div class="form-group">
                             <input type="text" hidden class="form-control" asp-for="NewRegister.Id" id="userId" />

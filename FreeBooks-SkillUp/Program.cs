@@ -33,6 +33,14 @@ namespace WebBooks_SkillUp
                     option.Password.RequireNonAlphanumeric = false;
                 });
 
+            builder.Services.ConfigureApplicationCookie(
+                options =>
+                {
+                    options.LoginPath = "/Admin/Accounts/Login"; // „”«— ’›Õ…  ”ÃÌ· «·œŒÊ·
+                    options.AccessDeniedPath = "/Admin/Accounts/AccessDenied"; // „”«— ’›Õ… —›÷ «·Ê’Ê·
+                });
+
+
 
             var app = builder.Build();
 
@@ -52,6 +60,7 @@ namespace WebBooks_SkillUp
 
             app.UseSession();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

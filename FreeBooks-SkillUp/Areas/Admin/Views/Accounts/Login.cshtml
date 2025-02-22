@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+@model LoginViewModel
 
 <!DOCTYPE html>
 <html>
@@ -22,37 +23,49 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Admin</b>LTE</a>
+            <b>Admin</b>
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
 
-                <form action="../../index3.html" method="post">
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                <p class="login-box-msg">Sign in to start your session</p>
+                
+                <form asp-controller="Accounts" asp-action="Login" method="post">
+
+                    @if (ViewBag.ErrorLogin == false)
+                    {
+                        <span class="alert alert-danger w-100 d-block text-center" style="font-size: 14px;">
+                            Invalid Login
+                        </span>
+                    }
+
+                    <div class="input-group">
+                        <input type="email" asp-for="@Model.Email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                    <span class="text text-danger text-sm" asp-validation-for="@Model.Email"></span>
+                    <div class="input-group mt-3">
+                        <input asp-for="@Model.Password" type="password" class="form-control" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <span class="text text-danger text-sm" asp-validation-for="@Model.Password"></span>
+                    <div class="row mt-3">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
+                                <input asp-for="@Model.RememberMe" type="checkbox" id="remember">
                                 <label for="remember">
                                     Remember Me
                                 </label>

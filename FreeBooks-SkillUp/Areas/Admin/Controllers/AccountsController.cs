@@ -17,12 +17,14 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly BookDbContext _bookDbContext;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountsController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, BookDbContext bookDbContext)
+        public AccountsController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, BookDbContext bookDbContext, SignInManager<ApplicationUser> signInManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _bookDbContext = bookDbContext;
+            _signInManager = signInManager;
         }
 
         public IActionResult Role()
@@ -212,6 +214,8 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
             return RedirectToAction("Register", "Accounts");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(RegisterViewModel model)
         {
 
@@ -237,9 +241,39 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
         }
 
 
+
         public IActionResult Login()
-        {
+        {            
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                
+                if((await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false)).Succeeded)
+                    return RedirectToAction("Index", "Home");
+                else
+                    ViewBag.ErrorLogin = false;
+            }
+            return View(model);
+        }
+
+
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Login));
+
+        }
+
     }
 }
