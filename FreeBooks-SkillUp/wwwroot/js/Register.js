@@ -1,7 +1,12 @@
 ﻿$(document).ready(function () {
-    $('#tableRole').DataTable();
+    $('#tableRole').DataTable({
+        "autoWidth": false,
+        "responsive": true,
+        "columnDefs": [
+            { "width": "auto", "targets": "_all" } // ضبط العرض التلقائي للأعمدة
+        ]
+    });
 });
-
 
 
 //function Delete(id) {

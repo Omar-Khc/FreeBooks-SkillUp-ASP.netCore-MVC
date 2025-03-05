@@ -69,7 +69,7 @@ namespace Infrastructuree.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("Domin.Entity.Category", b =>
@@ -93,7 +93,7 @@ namespace Infrastructuree.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Domin.Entity.LogBook", b =>
@@ -120,7 +120,7 @@ namespace Infrastructuree.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("LogBooks");
+                    b.ToTable("LogBooks", (string)null);
                 });
 
             modelBuilder.Entity("Domin.Entity.LogGategory", b =>
@@ -147,7 +147,7 @@ namespace Infrastructuree.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("LogGategories");
+                    b.ToTable("LogGategories", (string)null);
                 });
 
             modelBuilder.Entity("Domin.Entity.LogSubCategory", b =>
@@ -174,7 +174,7 @@ namespace Infrastructuree.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("LogSubCategories");
+                    b.ToTable("LogSubCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domin.Entity.SubCategory", b =>
@@ -199,7 +199,7 @@ namespace Infrastructuree.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("SubCategories");
+                    b.ToTable("SubCategories", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructuree.ViewModels.ApplicationUser", b =>

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace WebBooks_SkillUp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AccountsController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -113,7 +114,7 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
             {
                 NewRegister = new NewRegister(),
                 Roles = _roleManager.Roles.OrderBy(x => x.Name).ToList(),
-                VwUsers = _bookDbContext.UsersView.OrderBy(x => x.Role).ToList() //_userManager.Users.OrderBy(x=>x.Name).ToList()
+                VwUsers = _bookDbContext.UsersView.OrderBy(x => x.Name).ToList() //_userManager.Users.OrderBy(x=>x.Name).ToList()
             };
             return View(model);
         }
@@ -241,7 +242,7 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
         }
 
 
-
+        [AllowAnonymous]
         public IActionResult Login()
         {            
             if (User.Identity.IsAuthenticated)
@@ -253,6 +254,7 @@ namespace WebBooks_SkillUp.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
 

@@ -1,4 +1,8 @@
+using Domin.Entity;
 using Infrastructuree.Data;
+using Infrastructuree.IRepository;
+using Infrastructuree.IRepository.ServicesRepository;
+using Infrastructuree.Seeds;
 using Infrastructuree.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.Options;
@@ -8,7 +12,7 @@ namespace WebBooks_SkillUp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +44,8 @@ namespace WebBooks_SkillUp
                     options.AccessDeniedPath = "/Admin/Accounts/AccessDenied"; // „”«— ’›Õ… —›÷ «·Ê’Ê·
                 });
 
-
+            builder.Services.AddScoped<IServicesRepository<Category>, ServicesCategory>();
+            builder.Services.AddScoped<IServicesRepositoryLog<LogGategory>, ServicesLogCategory>();
 
             var app = builder.Build();
 
@@ -71,6 +76,26 @@ namespace WebBooks_SkillUp
                   name: "default",
                   pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
+
+            using var Scope = app.Services.CreateScope();
+            var services = Scope.ServiceProvider;
+
+            try
+            {
+                var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+                await DefaultRole.SeedAsync(roleManager);
+                await DefaultUser.SeedSuperAdminAsync(userManager, roleManager);
+                await DefaultUser.SeedBasicAsync(userManager, roleManager);
+                await DefaultUser.SeedAdminAsync(userManager, roleManager);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
             app.Run();
         }
